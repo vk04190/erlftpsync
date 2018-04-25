@@ -137,10 +137,13 @@ function delete_ws(){
         # Delete the folder for Workspace
         rm -r "$g_cfg_dir/$l_ws"
         # Check the command status
-        # Delete entry form Workspace configuration file
-        grep -iwv  "$l_ws" $g_ws_cfg > ${g_ws_cfg_test}
-        mv $g_ws_cfg_test $g_ws_cfg
-        echo "$l_ws : WorkSpcae deleted Successfully."
+        if [ $? -eq 0 ] 
+        then
+            # Delete entry form Workspace configuration file
+            grep -iwv  "$l_ws" $g_ws_cfg > ${g_ws_cfg_test}
+            mv $g_ws_cfg_test $g_ws_cfg
+            echo "$l_ws : WorkSpcae deleted Successfully."
+        fi
     else # Add new WorkSpcae
         print_invalid_ws $l_ws 
     fi
