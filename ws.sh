@@ -8,12 +8,12 @@
 source utility.sh
 
 # Declare the variables
-g_pwd=`pwd`                           # Current directory
-g_home_dir=`echo ~`                   # Home Directory
-g_cfg_dir="$g_home_dir/.erlftpsync"    # ERLFTPSYNC configuration Directory
-g_ws_cfg="$g_cfg_dir/ws.cfg"           # WorkSpcae configuration file
-g_ws_cfg_test="${g_ws_cfg}_test"
-g_ws_status=""
+g_pwd=`pwd`                               # Current directory
+g_home_dir=`echo ~`                       # Home Directory
+g_cfg_dir="$g_home_dir/.erlftpsync"       # ERLFTPSYNC configuration Directory
+g_ws_cfg="$g_cfg_dir/ws.cfg"              # WorkSpcae configuration file
+g_ws_cfg_test="${g_ws_cfg}_test"          # Temp file name 
+g_ws_status=""                            # WorkSpcae Status
 
 # Function to check/create the configuration directory # Will be used by install.sh
 create_ws_dir(){
