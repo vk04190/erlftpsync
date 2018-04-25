@@ -25,6 +25,16 @@ create_map_dir(){
     fi
 }
 
+# Function to return Invalid Workspace message
+function print_invalid_map() {
+    echo "$1 : Mapping does not exists. Please refer $g_map_cfg file to view existing Mappings."
+}
+
+# Function to return Invalid Workspace message
+function print_valid_map() {
+    echo "$1 : Mapping already $g_map_status. Please refer $g_map_cfg file to view existing Mappings."
+}
+
 # This function will initialize the required parameters, Always run it first
 function init_map() {
     # Get Workspace name from User if not passed
@@ -121,7 +131,7 @@ function get_map_status() {
 # Function to add new Mapping
 function add_mapping() {
     init_map $1
-    echo "Mapping Workspace directory : $g_map_ws_dir"
+    #echo "Mapping Workspace directory : $g_map_ws_dir"
     l_host=$( uread "Enter host" )                          # Host
     l_remote_dir=$( uread "Enter Remote directory" )        # Remote Directory
     l_local_dir=$( uread "Enter Local directory" )          # Local Directory
@@ -157,3 +167,24 @@ function add_mapping() {
     fi
 }
 
+# Function to delete a Mapping
+function delete_mapping() {
+    init_map $1
+    #echo "Mapping Workspace directory : $g_map_ws_dir"
+    l_map_id=$( uread "Enter Mapping id to Delete" )
+    # Check mapping status
+    if [ $( get_map_id_status $l_map_id ) != "INVALID"  ]; then
+        # Delete the folder for Mapping
+        rm -r "$g_map_ws_dir/$l_map_id"
+        # Check the command status
+        if [ $? -eq 0 ] 
+        then
+            # Delete entry from Mapping configuration file
+            grep -iwv  "$l_map_id" $g_map_cfg > ${g_map_cfg_tmp}
+            mv $g_map_cfg_tmp $g_map_cfg
+            echo "$l_map_id :  Mapping Deleted Successfully."
+        fi
+    else
+        print_invalid_map $l_map_id
+    fi
+}

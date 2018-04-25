@@ -12,7 +12,7 @@ g_pwd=`pwd`                               # Current directory
 g_home_dir=`echo ~`                       # Home Directory
 g_cfg_dir="$g_home_dir/.erlftpsync"       # ERLFTPSYNC configuration Directory
 g_ws_cfg="$g_cfg_dir/ws.cfg"              # WorkSpcae configuration file
-g_ws_cfg_test="${g_ws_cfg}_test"          # Temp file name 
+g_ws_cfg_tmp="${g_ws_cfg}_tmp"            # Temp file name 
 g_ws_status=""                            # WorkSpcae Status
 
 # Function to check/create the configuration directory # Will be used by install.sh
@@ -116,8 +116,8 @@ function add_ws(){
 
         # Make configuration entry
         echo "$l_ws,ENABLED">>$g_ws_cfg
-        sort $g_ws_cfg | uniq > $g_ws_cfg_test
-        mv $g_ws_cfg_test $g_ws_cfg
+        sort $g_ws_cfg | uniq > $g_ws_cfg_tmp
+        mv $g_ws_cfg_tmp $g_ws_cfg
         # Create  mapping file for new Workspace
         create_map_cfg "$g_cfg_dir/$l_ws/mapping.cfg"
         echo "$l_ws : Workspace created Successfully."
@@ -139,9 +139,9 @@ function delete_ws(){
         # Check the command status
         if [ $? -eq 0 ] 
         then
-            # Delete entry form Workspace configuration file
-            grep -iwv  "$l_ws" $g_ws_cfg > ${g_ws_cfg_test}
-            mv $g_ws_cfg_test $g_ws_cfg
+            # Delete entry from Workspace configuration file
+            grep -iwv  "$l_ws" $g_ws_cfg > ${g_ws_cfg_tmp}
+            mv $g_ws_cfg_tmp $g_ws_cfg
             echo "$l_ws : WorkSpcae deleted Successfully."
         fi
     else # Add new WorkSpcae
@@ -164,10 +164,10 @@ function disable_ws(){
         # Check the command status
         if [ $? -eq 0 ] 
         then
-            # Comment entry form WorkSpcae configuration file 
-            grep -iwv  "$l_ws" $g_ws_cfg > ${g_ws_cfg_test}
-            echo "$l_ws,DISABLED">>${g_ws_cfg_test}
-            mv $g_ws_cfg_test $g_ws_cfg
+            # Comment entry from WorkSpcae configuration file 
+            grep -iwv  "$l_ws" $g_ws_cfg > ${g_ws_cfg_tmp}
+            echo "$l_ws,DISABLED">>${g_ws_cfg_tmp}
+            mv $g_ws_cfg_tmp $g_ws_cfg
         fi
         echo "$l_ws : Workspace Disabled Successfully."
     elif [ "$g_ws_status" = "DISABLED" ]; then
@@ -194,10 +194,10 @@ function enable_ws(){
         # Check the command status
         if [ $? -eq 0 ] 
         then
-            # Comment entry form WorkSpcae configuration file
-            grep -ivw  "$l_ws" $g_ws_cfg > ${g_ws_cfg_test}
-            echo "$l_ws,ENABLED">>${g_ws_cfg_test}
-            mv $g_ws_cfg_test $g_ws_cfg
+            # Comment entry from WorkSpcae configuration file
+            grep -ivw  "$l_ws" $g_ws_cfg > ${g_ws_cfg_tmp}
+            echo "$l_ws,ENABLED">>${g_ws_cfg_tmp}
+            mv $g_ws_cfg_tmp $g_ws_cfg
         fi
         echo "$l_ws : WorkSpcae Enabled Successfully" 
     else 
