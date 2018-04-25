@@ -39,12 +39,12 @@ function create_map_cfg(){
 }
 
 # Function to return Invalid Workspace message
-function invalid_ws_msg() {
+function print_invalid_ws() {
     echo "$1 : Workspace does not exists. Please refer $g_ws_cfg file to view existing Workspaces."
 }
 
 # Function to return Invalid Workspace message
-function valid_ws_msg() {
+function print_valid_ws() {
     echo "$1 : Workspace already $g_ws_status. Please refer $g_ws_cfg file to view existing Workspaces."
 }
 
@@ -98,7 +98,7 @@ function add_ws(){
     # Check if Workspace name is passed, if not then ask user
     l_ws=$1
     if [ -z "$l_ws" ]; then
-        l_ws=$( uread "Enter Workspace to Add : " )
+        l_ws=$( uread "Enter Workspace to Add" )
     fi
 
     # Check if Workspace already exists
@@ -129,7 +129,7 @@ function delete_ws(){
     # Check if Workspace name is passed, if not then ask user
     l_ws=$1
     if [ -z "$l_ws" ]; then
-        l_ws=$( uread "Enter Workspace Name to Delete : " )
+        l_ws=$( uread "Enter Workspace Name to Delete" )
     fi
 
     # Check if Workspace already exists
@@ -142,7 +142,7 @@ function delete_ws(){
         mv $g_ws_cfg_test $g_ws_cfg
         echo "$l_ws : WorkSpcae deleted Successfully."
     else # Add new WorkSpcae
-        invalid_ws_msg $l_ws 
+        print_invalid_ws $l_ws 
     fi
 }
 
@@ -150,7 +150,7 @@ function delete_ws(){
 function disable_ws(){
     l_ws=$1
     if [ -z "$l_ws" ]; then
-        l_ws=$( uread "Enter Workspace Name to Disable : " )
+        l_ws=$( uread "Enter Workspace Name to Disable" )
     fi
 
     # Set WorkSpcae status
@@ -168,9 +168,9 @@ function disable_ws(){
         fi
         echo "$l_ws : Workspace Disabled Successfully."
     elif [ "$g_ws_status" = "DISABLED" ]; then
-        valid_ws_msg $l_ws
+        print_valid_ws $l_ws
     else 
-        invalid_ws_msg $l_ws
+        print_invalid_ws $l_ws
     fi
 }
 
@@ -178,13 +178,13 @@ function disable_ws(){
 function enable_ws(){
     l_ws=$1
     if [ -z "$l_ws" ]; then
-        l_ws=$( uread "Enter Workspace Name to Enable : " )
+        l_ws=$( uread "Enter Workspace Name to Enable" )
     fi
 
     # Set WorkSpcae status
     set_ws_status $l_ws
     if [ "$g_ws_status" = "ENABLED" ]; then # Disable WorkSpcae
-        valid_ws_msg $l_ws
+        print_valid_ws $l_ws
     elif [ "$g_ws_status" = "DISABLED" ]; then
         # Rename the Workspace folder with Disabled added
         mv "$g_cfg_dir/$l_ws-DISABLED" "$g_cfg_dir/${l_ws}"
@@ -198,6 +198,6 @@ function enable_ws(){
         fi
         echo "$l_ws : WorkSpcae Enabled Successfully" 
     else 
-        invalid_ws_msg $l_ws 
+        print_invalid_ws $l_ws 
     fi
 }

@@ -13,8 +13,10 @@ g_ws_cfg_file_hdr="# Configuration file for Workspace, Script will refer this
 # To disable a Workspace comment it, add Hash at the starting of the line
 "
 
+# Declare Arrays
 # Valid ga_operations
 declare -a ga_operations=('LIST' 'ADD' 'DELETE'  'ENABLE' 'DISABLE' 'EDIT');
+declare -a ga_components=('WS' 'MAP' 'FIL');
 
 # This function will return the passed string in UPPERCASE form
 function get_upper() {
@@ -29,6 +31,12 @@ function uread(){
 
 # This function will check if passed value is a valid Operation
 function check_valid_opr() {
+    # Check if NULL value is passed
+    if [ -z "$1" ]
+    then
+       echo "Operation cannot be NULL, should be in [ ${ga_components[@]} ]"
+       exit 1
+    fi
     status=""
     for value in "${ga_operations[@]}"
     do
@@ -45,7 +53,26 @@ function check_valid_opr() {
     fi
 }
 
-# Function to return Invalid Workspace message
-function invalid_ws() {
-    echo "$1 : Workspace does not exists. Please refer $2 file to view existing Workspaces."
+# This function will check if passed value is a valid Component
+function check_valid_comp() {
+    # Check if NULL value is passed
+    if [ -z "$1" ]
+    then
+       echo "Component cannot be NULL, should be in [ ${ga_components[@]} ]"
+       exit 1
+    fi
+    status=""
+    for value in "${ga_components[@]}"
+    do
+        if [ "$value" = "$1" ]; then
+            status="0"
+        fi
+    done
+
+    # Check if status is assigned
+    if [ -z "$status" ]
+    then
+       echo "$1 : Invalid Component, should be in [ ${ga_components[@]}" ]
+       exit 1
+    fi
 }
