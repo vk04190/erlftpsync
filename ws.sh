@@ -18,20 +18,29 @@ g_ws_status=""                            # WorkSpcae Status
 # Function to check/create the configuration directory # Will be used by install.sh
 create_ws_dir(){
     #echo "Checking if Directory exists : $g_cfg_dir"
-    if [ ! -d "$g_cfg_dir" ] ; then
-        echo "Creating configuration directory ......"
+    if [ ! -d "$g_cfg_dir" ] ; 
+    then
+        echo "Creating configuration directory ...... : $g_cfg_dir"
         mkdir "$g_cfg_dir"
         chmod 755 $g_cfg_dir
+    else
+        echo "Configuration directory ...... : $g_cfg_dir"
     fi
 }
 
 # Function to create ws configuration file # Will be used by install.sh
 function create_ws_cfg(){
-    if [ ! -f "$g_ws_cfg" ]; then
-        echo "Creating configuration file"
+    if [ ! -f "$g_ws_cfg" ]; 
+    then
+        echo "Creating configuration file : $g_ws_cfg_file_hdr"
         echo $g_ws_cfg_file_hdr>$g_ws_cfg
+    else
+        echo "Configuration file : $g_ws_cfg"
+        echo "Configuration file Contant :"
+        cat $g_ws_cfg
     fi
 }
+
 
 # Function to create WorkSpcae Mapping file
 function create_map_cfg(){
