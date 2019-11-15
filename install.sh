@@ -1,4 +1,24 @@
 #!/bin/bash
+# -- ############################################################################
+# -- #      Copyright (C) 2018-2019 Vivek Kumar <vivekkumar.xda@gmail.com>      #               #
+# -- #                All rights reserved.                                      #
+# -- #              Proprietary and confidential                                #
+# -- # Unauthorized copying of this file, via any medium is strictly prohibited #
+# -- ############################################################################
+# -- #
+# -- # Project          : erlftpsync
+# -- # Application      : erlftpsync
+# -- # File Name        : install.sh
+# -- # Exec Method      : Linux Shell Script
+# -- # Description      : Project Installation Script
+# -- #
+# -- # Change History
+# -- # -----------------------------------------------------------------------
+# -- # Version     Date             Author           Remarks
+# -- # =======  ===========     =============    ============================
+# -- # 1.0      25-Aug-2019     Vivek Kumar        Initial Version
+# -- #
+# -- ############################################################################
 
 #############################################################################################################################
 #  File Name   : install.sh
